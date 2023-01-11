@@ -10,7 +10,7 @@ import NumberOfEvents from './NumberOfEvents';
 class App extends Component {
   state = {
     events: [],
-    locations: []
+    locations: [],
     selectedLocation: 'all',
     eventCount: 32
   }
