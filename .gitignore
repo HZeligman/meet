@@ -42180,3 +42180,10 @@ node_modules/yauzl/index.js
 node_modules/yauzl/LICENSE
 node_modules/yauzl/package.json
 node_modules/yauzl/README.md
+node_modules/.cache/babel-loader/4e21f0c7297f2d57de83f04b32d4fa6e09db16311584ad1cdb712b82d33750b8.json
+node_modules/.cache/babel-loader/d8c54523e9b37f5b4f38212545932f58375ee272e213a93edec39db643db7b82.json
+node_modules/atatus-spa/atatus-spa.min.js
+node_modules/atatus-spa/atatus.d.ts
+node_modules/atatus-spa/CHANGELOG.md
+node_modules/atatus-spa/package.json
+node_modules/atatus-spa/README.md
