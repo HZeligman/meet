@@ -70,7 +70,7 @@ class App extends Component {
           currentLocation === "all"
             ? response.events
             : response.events.filter(
-              (evemt) => event.location === currentLocation
+              (event) => event.location === currentLocation
             );
         const events = locationEvents.slice(0, eventCount);
         return this.setState({
@@ -84,15 +84,17 @@ class App extends Component {
 
   render() {
     const { locations, numberOfEvents, events, tokenCheck } = this.state;
-    <div className="App">
-      <h1>Meet App</h1>
-      <h4>Choose your nearest city.</h4>
-      <CitySearch updateEvents={this.updateEvents} locations={locations} />
-      <NumberOfEvents
-        updateEvents={this.updateEvents}
-        numberOfEvents={numberOfEvents}
-      />
-    </div>
+    return (
+      <div className="App">
+        <h1>Meet App</h1>
+        <h4>Choose your nearest city.</h4>
+        <CitySearch updateEvents={this.updateEvents} locations={locations} />
+        <NumberOfEvents
+          updateEvents={this.updateEvents}
+          numberOfEvents={numberOfEvents}
+        />
+      </div>
+    )
   }
 }
 
