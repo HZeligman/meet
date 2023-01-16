@@ -3,7 +3,8 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents, checkToken, getToken } from './api';
+import WelcomeScreen from './WelcomeScreen';
+import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
 import './nprogress.css';
 
 
@@ -17,20 +18,22 @@ class App extends Component {
     numberOfEvents: 32,
     tokenCheck: false,
     offlineText: '',
+    showWelcomeScreen: undefined
   }
 
   async componentDidMount() {
-    const accessToken = localStorage.getItem("access_token");
-    const validToken = accessToken !== null ? await checkToken(accessToken) : false;
-    this.setState({ tokenCheck: validToken });
-    if (validToken === true) this.updateEvents()
+    this.mounted = true;
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
-
-    this.mounted = true;
-    if (code && this.mounted === true && validToken === false) {
-      this.setState({ tokenCheck: true });
-      this.updateEvents()
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
     }
   }
 
@@ -83,6 +86,7 @@ class App extends Component {
   };
 
   render() {
+    if (this.state.showWelcomeScreen === undefined) return <div className="App" />
     const { locations, numberOfEvents, events, tokenCheck } = this.state;
     return (
       <div className="App">
@@ -93,6 +97,8 @@ class App extends Component {
           updateEvents={this.updateEvents}
           numberOfEvents={numberOfEvents}
         />
+        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => { getAccessToken() }} />
       </div>
     )
   }
