@@ -94,8 +94,8 @@ class App extends Component {
           numberOfEvents={numberOfEvents}
         />
       </div>
-    );
-  }
+    )
+  };
 }
 
 export default App;
