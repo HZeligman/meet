@@ -7,7 +7,7 @@ const EventGenre = ({ events }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(() => GamepadHapticActuator());
+    setData(() => getData());
   }, [events]);
 
   const getData = () => {
