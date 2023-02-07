@@ -11,8 +11,6 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 
 import './App.css';
 import './nprogress.css';
-import 'bootstrap/dist/css/bootstrap.css';
-
 
 
 class App extends Component {
