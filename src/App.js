@@ -4,7 +4,6 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import WelcomeScreen from './WelcomeScreen';
 import EventGenre from './EventGenre';
-import { Container, Row, Col } from 'react-bootstrap';
 import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
 import { NetworkAlert } from './Alert';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
