@@ -12,7 +12,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import './App.css';
 import './nprogress.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import logo from './logo.png';
+
 
 
 class App extends Component {
