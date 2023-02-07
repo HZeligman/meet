@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
-import './nprogress.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import WelcomeScreen from './WelcomeScreen';
-import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import EventGenre from './EventGenre';
+import { Container, Row, Col } from 'react-bootstrap';
+import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
+import { NetworkAlert } from './Alert';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
+import './App.css';
+import './nprogress.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import logo from './logo.png';
 
 
 class App extends Component {
@@ -32,14 +37,43 @@ class App extends Component {
     if ((code || isTokenValid) && this.mounted) {
       getEvents().then((events) => {
         if (this.mounted) {
-          this.setState({ events, locations: extractLocations(events) });
+          this.setState({
+            events: events.slice(0, this.state.numberOfEvents),
+            locations: extractLocations(events)
+          });
         }
+        if (!navigator.onLine) {
+          this.setState({ networkText: <div className="networkNotification">'Network error, the events you are viewing may be out of date. To make sure you are viewing the latest information, make sure you are connected to the internet'</div> });
+          console.log("offline mode");
+        } else {
+          this.setState({ networkText: '' });
+        };
       });
     }
   }
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  updateEvents = (location) => {
+    getEvents().then((events) => {
+      const locationEvents = (location === 'all') ?
+        events :
+        events.filter((event) => event.location === location);
+      const { numberOfEvents } = this.state;
+      this.setState({
+        events: locationEvents.slice(0, numberOfEvents)
+      });
+    });
+  }
+
+  updateEventCount = (eventCount) => {
+    const { currentLocation } = this.state;
+    this.setState({
+      numberOfEvents: eventCount
+    });
+    this.updateEvents(currentLocation, eventCount);
   }
 
   getData = () => {
@@ -52,43 +86,9 @@ class App extends Component {
     return data;
   };
 
-  updateEvents = (location, eventCount) => {
-    console.log('update events token valid: ', this.state.tokenCheck)
-    const { currentLocation, numberOfEvents } = this.state;
-    if (location) {
-      getEvents().then((response) => {
-        const locationEvents =
-          location === "all"
-            ? response.events
-            : response.events.filter((event) => event.location === location);
-        const events = locationEvents.slice(0, numberOfEvents);
-        return this.setState({
-          events: events,
-          currentLocation: location,
-          locations: response.locations,
-        });
-      });
-    } else {
-      getEvents().then((response) => {
-        const locationEvents =
-          currentLocation === "all"
-            ? response.events
-            : response.events.filter(
-              (event) => event.location === currentLocation
-            );
-        const events = locationEvents.slice(0, eventCount);
-        return this.setState({
-          events: events,
-          numberOfEvents: eventCount,
-          locations: response.locations,
-        });
-      });
-    }
-  };
-
   render() {
     if (this.state.showWelcomeScreen === undefined) return <div className="App" />
-    const { locations, numberOfEvents, events, tokenCheck } = this.state;
+    const { locations, numberOfEvents, events, networkText } = this.state;
     return (
       <div className="App">
         <h1>Meet App</h1>
