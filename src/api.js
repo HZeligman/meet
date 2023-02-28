@@ -1,6 +1,6 @@
-import { mockData } from "./mock-data";
-import axios from "axios";
-import NProgress from "nprogress";
+import { mockData } from './mock-data';
+import NProgress from 'nprogress';
+import axios from 'axios';
 
 export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
@@ -8,7 +8,7 @@ export const extractLocations = (events) => {
   return locations;
 };
 
-export const checkToken = async (accessToken) => {
+const checkToken = async (accessToken) => {
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   )
@@ -69,7 +69,7 @@ export const getAccessToken = async () => {
   return accessToken;
 };
 
-export const getEvents = async () => {
+export const getEvents = asyn() => {
   NProgress.start();
 
   if (window.location.href.startsWith("http://localhost")) {
@@ -100,3 +100,4 @@ export const getEvents = async () => {
     return result.data.events;
   }
 };
+
