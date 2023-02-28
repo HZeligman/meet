@@ -35,7 +35,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const { access_token } = await fetch(
-    "https://6cl0o2ra2b.execute-api.us-east-2.amazonaws.com/dev/api/token" +
+    "https://79kjn60t55.execute-api.us-east-1.amazonaws.com/dev/api/token" +
     "/" +
     encodeCode
   )
@@ -59,7 +59,7 @@ export const getAccessToken = async () => {
     const code = await searchParams.get("code");
     if (!code) {
       const results = await axios.get(
-        "https://6cl0o2ra2b.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
+        "https://79kjn60t55.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
       );
       const { authUrl } = results.data;
       return (window.location.href = authUrl);
@@ -87,7 +87,7 @@ export const getEvents = async () => {
   if (token) {
     removeQuery();
     const url =
-      "https://6cl0o2ra2b.execute-api.us-east-2.amazonaws.com/dev/api/get-events" +
+      "https://79kjn60t55.execute-api.us-east-1.amazonaws.com/dev/api/get-events" +
       "/" +
       token;
     const result = await axios.get(url);
