@@ -97,8 +97,11 @@ class App extends Component {
   render() {
     const { locations, numberOfEvents, events, tokenCheck } = this.state;
     //const showWelcomeScreen = !accessToken && navigator.onLine;
-
     return tokenCheck === false ? (
+      <div className='App'>
+        <Login />
+      </div>
+    ) : (
       <div className="App">
         <h1>Meet App</h1>
         <h4>Choose Your Nearest City</h4>
