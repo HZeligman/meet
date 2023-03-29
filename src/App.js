@@ -99,7 +99,7 @@ class App extends Component {
     //const showWelcomeScreen = !accessToken && navigator.onLine;
     return tokenCheck === false ? (
       <div className='App'>
-        <Login />
+        <WelcomeScreen />
       </div>
     ) : (
       <div className="App">
@@ -107,7 +107,7 @@ class App extends Component {
         <h4>Choose Your Nearest City</h4>
         <CitySearch updateEvents={this.updateEvents} locations={locations} />
         <NumberOfEvents
-          updateEvents={this, updateEvents}
+          updateEvents={this.updateEvents}
           numberOfEvents={numberOfEvents}
         />
         <div className="data-vis-wrapper">
